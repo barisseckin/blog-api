@@ -16,7 +16,7 @@ public class BlogCommentDtoConverter {
                 blogComment.getBody(),
                 blogComment.getCreateDate(),
                 blogComment.getUpdateDate(),
-                new BlogDto(blogComment.getBlog().getTitle(), blogComment.getBlog().getBody(),
+                new BlogDto(blogComment.getBlog().getPublicId(), blogComment.getBlog().getTitle(), blogComment.getBlog().getBody(),
                         blogComment.getBlog().getLikeNumber(), blogComment.getBlog().getDislikeNumber(),
                         blogComment.getBlog().getCreateDate(), blogComment.getBlog().getUpdateDate(),
                         blogComment.getBlog().getCategory().getName(), blogComment.getBlog().getUser().getMail()),

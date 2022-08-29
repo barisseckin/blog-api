@@ -12,6 +12,7 @@ public class BlogDtoConverter {
 
     public BlogDto convert(Blog blog) {
         return new BlogDto(
+                blog.getPublicId(),
                 blog.getTitle(),
                 blog.getBody(),
                 blog.getLikeNumber(),

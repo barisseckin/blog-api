@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +32,7 @@ public class BlogService {
         User user = userService.getUserByMail(request.getUserByMail());
 
         Blog blog = new Blog(
+                UUID.randomUUID().toString(),
                 request.getTitle(),
                 request.getBody(),
                 LocalDate.now(),
@@ -39,7 +41,7 @@ public class BlogService {
         );
 
         if (user.isActive()) {
-            log.info("blog created, title: " + blog.getTitle());
+            log.info("blog created, public id: " + blog.getPublicId());
             return blogDtoConverter.convert(blogRepository.save(blog));
         }
 
@@ -63,14 +65,46 @@ public class BlogService {
                 .collect(Collectors.toList());
     }
 
-    public void deleteByBody(String body) {
-        Blog blog = getBlogByBody(body);
+    public BlogDto getByPublicId(int id) {
+        return blogDtoConverter.convert(getBlogByPublicId(id));
+    }
+
+    public void deleteByPublicId(int id) {
+        Blog blog = getBlogByPublicId(id);
         blogRepository.deleteById(blog.getId());
     }
 
-    protected Blog getBlogByBody(String body) {
-        return blogRepository.findBlogByBody(body)
-                .orElseThrow(() -> new NotFoundException("blog not found, blog body: " + body));
+    public BlogDto increaseLikeByPublicId(int id) {
+        Blog blog = getBlogByPublicId(id);
+
+        blog.setLikeNumber(blog.getLikeNumber() + 1);
+        return blogDtoConverter.convert(blogRepository.save(blog));
+    }
+
+    public BlogDto reduceLikeByPublicId(int id) {
+        Blog blog = getBlogByPublicId(id);
+
+        blog.setLikeNumber(blog.getLikeNumber() - 1);
+        return blogDtoConverter.convert(blogRepository.save(blog));
+    }
+
+    public BlogDto increaseDislikeByPublicId(int id) {
+        Blog blog = getBlogByPublicId(id);
+
+        blog.setDislikeNumber(blog.getDislikeNumber() + 1);
+        return blogDtoConverter.convert(blogRepository.save(blog));
+    }
+
+    public BlogDto reduceDislikeNumberByPublicId(int id) {
+        Blog blog = getBlogByPublicId(id);
+
+        blog.setDislikeNumber(blog.getDislikeNumber() - 1);
+        return blogDtoConverter.convert(blogRepository.save(blog));
+    }
+
+    protected Blog getBlogByPublicId(int id) {
+        return blogRepository.findBlogByPublicId(id)
+                .orElseThrow(() -> new NotFoundException("blog not found, public id: " + id));
     }
 
 }

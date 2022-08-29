@@ -16,6 +16,7 @@ public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String publicId;
     private String title;
     private String body;
     private int likeNumber;
@@ -27,7 +28,8 @@ public class Blog {
     @ManyToOne
     private User user;
 
-    public Blog(String title, String body, LocalDate createDate, Category category, User user) {
+    public Blog(String publicId, String title, String body, LocalDate createDate, Category category, User user) {
+        this.publicId = publicId;
         this.title = title;
         this.body = body;
         this.createDate = createDate;

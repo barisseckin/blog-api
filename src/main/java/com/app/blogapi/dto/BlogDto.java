@@ -8,6 +8,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 public class BlogDto {
+    private String publicId;
     private String title;
     private String body;
     private int likeNumber;
