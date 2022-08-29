@@ -27,4 +27,45 @@ public class BlogController {
     public ResponseEntity<List<BlogDto>> getAll() {
         return new ResponseEntity<>(blogService.getAll(), HttpStatus.OK);
     }
+
+    @GetMapping("/get-by-category/{categoryName}")
+    public ResponseEntity<List<BlogDto>> getBlogByCategory(@PathVariable("categoryName") String categoryName) {
+        return new ResponseEntity<>(blogService.getBlogByCategory(categoryName), HttpStatus.OK);
+    }
+
+    @GetMapping("/search-by-title/{title}")
+    public ResponseEntity<List<BlogDto>> searchBlogByTitle(@PathVariable("title") String title) {
+        return new ResponseEntity<>(blogService.searchBlogByTitle(title), HttpStatus.OK);
+    }
+
+    @GetMapping("/get-by-publicId/{id}")
+    public ResponseEntity<BlogDto> getByPublicId(@PathVariable("id") String id) {
+        return new ResponseEntity<>(blogService.getByPublicId(id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteByPublicId(@PathVariable("id") String id) {
+        blogService.deleteByPublicId(id);
+        return new ResponseEntity<>("deleted", HttpStatus.OK);
+    }
+
+    @PatchMapping("/increase-like-by-publicId/{id}")
+    public ResponseEntity<BlogDto> increaseLikeByPublicId(@PathVariable("id") String id) {
+        return new ResponseEntity<>(blogService.increaseLikeByPublicId(id), HttpStatus.OK);
+    }
+
+    @PatchMapping("/reduce-like-by-publicId/{id}")
+    public ResponseEntity<BlogDto> reduceLikeByPublicId(@PathVariable("id") String id) {
+        return new ResponseEntity<>(blogService.reduceLikeByPublicId(id), HttpStatus.OK);
+    }
+
+    @PatchMapping("/increase-dislike-by-publicId/{id}")
+    public ResponseEntity<BlogDto> increaseDislikeByPublicId(@PathVariable("id") String id) {
+        return new ResponseEntity<>(blogService.increaseDislikeByPublicId(id), HttpStatus.OK);
+    }
+
+    @PatchMapping("/reduce-dislike-by-publicId/{id}")
+    public ResponseEntity<BlogDto> reduceDislikeNumberByPublicId(@PathVariable("id") String id) {
+        return new ResponseEntity<>(blogService.reduceDislikeNumberByPublicId(id), HttpStatus.OK);
+    }
 }

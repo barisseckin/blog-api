@@ -65,44 +65,44 @@ public class BlogService {
                 .collect(Collectors.toList());
     }
 
-    public BlogDto getByPublicId(int id) {
+    public BlogDto getByPublicId(String id) {
         return blogDtoConverter.convert(getBlogByPublicId(id));
     }
 
-    public void deleteByPublicId(int id) {
+    public void deleteByPublicId(String id) {
         Blog blog = getBlogByPublicId(id);
         blogRepository.deleteById(blog.getId());
     }
 
-    public BlogDto increaseLikeByPublicId(int id) {
+    public BlogDto increaseLikeByPublicId(String id) {
         Blog blog = getBlogByPublicId(id);
 
         blog.setLikeNumber(blog.getLikeNumber() + 1);
         return blogDtoConverter.convert(blogRepository.save(blog));
     }
 
-    public BlogDto reduceLikeByPublicId(int id) {
+    public BlogDto reduceLikeByPublicId(String id) {
         Blog blog = getBlogByPublicId(id);
 
         blog.setLikeNumber(blog.getLikeNumber() - 1);
         return blogDtoConverter.convert(blogRepository.save(blog));
     }
 
-    public BlogDto increaseDislikeByPublicId(int id) {
+    public BlogDto increaseDislikeByPublicId(String id) {
         Blog blog = getBlogByPublicId(id);
 
         blog.setDislikeNumber(blog.getDislikeNumber() + 1);
         return blogDtoConverter.convert(blogRepository.save(blog));
     }
 
-    public BlogDto reduceDislikeNumberByPublicId(int id) {
+    public BlogDto reduceDislikeNumberByPublicId(String id) {
         Blog blog = getBlogByPublicId(id);
 
         blog.setDislikeNumber(blog.getDislikeNumber() - 1);
         return blogDtoConverter.convert(blogRepository.save(blog));
     }
 
-    protected Blog getBlogByPublicId(int id) {
+    protected Blog getBlogByPublicId(String id) {
         return blogRepository.findBlogByPublicId(id)
                 .orElseThrow(() -> new NotFoundException("blog not found, public id: " + id));
     }

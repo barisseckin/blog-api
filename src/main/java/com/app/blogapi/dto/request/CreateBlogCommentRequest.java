@@ -10,7 +10,7 @@ public class CreateBlogCommentRequest {
     @NotBlank
     private String body;
     @NotBlank
-    private int blogPublicId;
+    private String blogPublicId;
     @Email
     private String userByMail;
 }

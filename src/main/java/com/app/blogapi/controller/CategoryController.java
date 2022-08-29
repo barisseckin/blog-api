@@ -27,4 +27,15 @@ public class CategoryController {
     public ResponseEntity<List<CategoryDto>> getAll() {
         return new ResponseEntity<>(categoryService.getAll(), HttpStatus.OK);
     }
+
+    @GetMapping("/get-by-name/{name}")
+    public ResponseEntity<CategoryDto> getByName(@PathVariable("name") String name) {
+        return new ResponseEntity<>(categoryService.getByName(name), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{name}")
+    public ResponseEntity<?> deleteByName(@PathVariable("name") String name) {
+        categoryService.deleteByName(name);
+        return new ResponseEntity<>("deleted", HttpStatus.OK);
+    }
 }
