@@ -2,6 +2,7 @@ package com.app.blogapi.controller;
 
 import com.app.blogapi.dto.BlogDto;
 import com.app.blogapi.dto.request.CreateBlogRequest;
+import com.app.blogapi.dto.request.UpdateBlogRequest;
 import com.app.blogapi.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -67,5 +68,10 @@ public class BlogController {
     @PatchMapping("/reduce-dislike-by-publicId/{id}")
     public ResponseEntity<BlogDto> reduceDislikeNumberByPublicId(@PathVariable("id") String id) {
         return new ResponseEntity<>(blogService.reduceDislikeNumberByPublicId(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/update-by-publicId/{id}")
+    public ResponseEntity<BlogDto> update(@PathVariable("id") String publicId, @RequestBody UpdateBlogRequest request) {
+        return new ResponseEntity<>(blogService.update(publicId, request), HttpStatus.OK);
     }
 }

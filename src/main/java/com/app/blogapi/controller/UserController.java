@@ -2,6 +2,7 @@ package com.app.blogapi.controller;
 
 import com.app.blogapi.dto.UserDto;
 import com.app.blogapi.dto.request.CreateUserRequest;
+import com.app.blogapi.dto.request.UpdateUserRequest;
 import com.app.blogapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -52,5 +53,10 @@ public class UserController {
     @PatchMapping("/activate-user/{mail}")
     public ResponseEntity<UserDto> activateUser(@PathVariable("mail") String mail) {
         return new ResponseEntity<>(userService.activateUser(mail), HttpStatus.OK);
+    }
+
+    @PutMapping("/{mail}")
+    public ResponseEntity<UserDto> update(@PathVariable("mail") String mail, @Valid @RequestBody UpdateUserRequest request) {
+        return new ResponseEntity<>(userService.update(mail, request), HttpStatus.OK);
     }
 }

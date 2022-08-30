@@ -28,7 +28,7 @@ public class BlogCommentController {
         return new ResponseEntity<>(blogCommentService.getAll(), HttpStatus.OK);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{body}")
     public ResponseEntity<?> deleteByBody(@PathVariable("body") String body) {
         blogCommentService.deleteByBody(body);
         return new ResponseEntity<>("deleted", HttpStatus.OK);

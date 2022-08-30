@@ -2,6 +2,7 @@ package com.app.blogapi.controller;
 
 import com.app.blogapi.dto.CategoryDto;
 import com.app.blogapi.dto.request.CreateCategoryRequest;
+import com.app.blogapi.dto.request.UpdateCategoryRequest;
 import com.app.blogapi.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,5 +38,10 @@ public class CategoryController {
     public ResponseEntity<?> deleteByName(@PathVariable("name") String name) {
         categoryService.deleteByName(name);
         return new ResponseEntity<>("deleted", HttpStatus.OK);
+    }
+
+    @PutMapping("/{name}")
+    public ResponseEntity<CategoryDto> update(@PathVariable("name") String name, @RequestBody UpdateCategoryRequest request) {
+        return new ResponseEntity<>(categoryService.update(name, request), HttpStatus.OK);
     }
 }

@@ -3,6 +3,7 @@ package com.app.blogapi.service;
 import com.app.blogapi.dto.UserDto;
 import com.app.blogapi.dto.converter.UserDtoConverter;
 import com.app.blogapi.dto.request.CreateUserRequest;
+import com.app.blogapi.dto.request.UpdateUserRequest;
 import com.app.blogapi.exception.NotFoundException;
 import com.app.blogapi.model.User;
 import com.app.blogapi.repository.UserRepository;
@@ -63,6 +64,15 @@ public class UserService {
         User user = getUserByMail(mail);
 
         user.setActive(true);
+        return userDtoConverter.convert(userRepository.save(user));
+    }
+
+    public UserDto update(String mail, UpdateUserRequest request) {
+        User user = getUserByMail(mail);
+
+        user.setUserName(request.getUserName());
+        user.setPassword(request.getPassword());
+        user.setUpdateDate(LocalDate.now());
         return userDtoConverter.convert(userRepository.save(user));
     }
 

@@ -3,6 +3,7 @@ package com.app.blogapi.service;
 import com.app.blogapi.dto.CategoryDto;
 import com.app.blogapi.dto.converter.CategoryDtoConverter;
 import com.app.blogapi.dto.request.CreateCategoryRequest;
+import com.app.blogapi.dto.request.UpdateCategoryRequest;
 import com.app.blogapi.exception.NotFoundException;
 import com.app.blogapi.model.Category;
 import com.app.blogapi.repository.CategoryRepository;
@@ -42,6 +43,13 @@ public class CategoryService {
         Category category = getCategoryByName(name);
         categoryRepository.deleteById(category.getId());
         log.info("category deleted, name: " + name);
+    }
+
+    public CategoryDto update(String name, UpdateCategoryRequest request) {
+        Category category = getCategoryByName(name);
+
+        category.setName(request.getName());
+        return categoryDtoConverter.convert(categoryRepository.save(category));
     }
 
     protected Category getCategoryByName(String name) {

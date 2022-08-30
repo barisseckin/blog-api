@@ -3,6 +3,7 @@ package com.app.blogapi.service;
 import com.app.blogapi.dto.BlogDto;
 import com.app.blogapi.dto.converter.BlogDtoConverter;
 import com.app.blogapi.dto.request.CreateBlogRequest;
+import com.app.blogapi.dto.request.UpdateBlogRequest;
 import com.app.blogapi.exception.NotFoundException;
 import com.app.blogapi.model.Blog;
 import com.app.blogapi.model.Category;
@@ -99,6 +100,18 @@ public class BlogService {
         Blog blog = getBlogByPublicId(id);
 
         blog.setDislikeNumber(blog.getDislikeNumber() - 1);
+        return blogDtoConverter.convert(blogRepository.save(blog));
+    }
+
+    public BlogDto update(String publicId, UpdateBlogRequest request) {
+        Category category = categoryService.getCategoryByName(request.getCategoryName());
+        Blog blog = getBlogByPublicId(publicId);
+
+        blog.setTitle(request.getTitle());
+        blog.setBody(request.getBody());
+        blog.setCategory(category);
+        blog.setUpdateDate(LocalDate.now());
+
         return blogDtoConverter.convert(blogRepository.save(blog));
     }
 
